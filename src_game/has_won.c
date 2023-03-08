@@ -2,7 +2,7 @@
 
 int update_counter(int counter, enum e_player token, t_size size, enum e_player tab[size.row][size.col], int y, int x)
 {
-	if (y < 0 || y > size.row - 1 || x < 0 || x > size.col -1)
+	if (y < 0 || y >= size.row || x < 0 || x >= size.col)
 		return (counter);
 	if (tab[y][x] == token)
 		return (counter + 1);
@@ -10,7 +10,7 @@ int update_counter(int counter, enum e_player token, t_size size, enum e_player 
 		return (0);
 }
 
-int has_won(t_size size, enum e_player tab[size.row][size.col], t_pos pos)
+enum e_player has_won(t_size size, enum e_player tab[size.row][size.col], t_pos pos)
 {
 	int i;
 	int count_hor = 0;
@@ -27,8 +27,8 @@ int has_won(t_size size, enum e_player tab[size.row][size.col], t_pos pos)
 		count_diag_up = update_counter(count_diag_up, token, size, tab, pos.y + i, pos.x + i);
 		count_diag_down = update_counter(count_diag_down, token, size, tab, pos.y - i, pos.x + i);
 		if (count_hor >= 4 || count_ver >= 4 || count_diag_up >= 4 || count_diag_down >= 4)
-			return (1);
+			return (token);
 		i++;
 	}
-	return (0);
+	return (NONE);
 }

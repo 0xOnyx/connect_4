@@ -19,9 +19,9 @@ PATH_MINMAX			= src_minmax/
 PATH_UTIL			= src_util/
 PATH_OBJ			= objs/
 
-HEADER				= 	includes.h game.h utils.h
-SRC_GAME			= 	main.c play_game.c has_won.c play_human.c print_board.c
-SRC_MINMAX			= 	minmax.c
+HEADER				= 	includes.h game.h utils.h minmax.h
+SRC_GAME			= 	main.c play_game.c has_won.c play_human.c print_board.c play_ai.c
+SRC_MINMAX			= 	minmax.c calc_board_value.c
 SRC_UTIL			= 	string.c util.c
 
 SRC_GAMES			= $(addprefix $(PATH_GAME),$(SRC_GAME))

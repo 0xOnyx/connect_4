@@ -17,11 +17,11 @@ int	main(int argc, char **argv)
 		return (2);
 	}
     //	                 Y         X
-	enum e_player tab[size.row][size.col];
+	enum e_player	tab[size.row][size.col];
+	int 		 	current_pos[size.col];
 	ft_memset((void *)tab, 0, sizeof(enum e_player) * size.row * size.col);
-
-	play_game(size, tab, HUMAN);
-	printf("value of 0 0  -> %d\n", tab[0][0]);
+	ft_memset((void *)current_pos, 0, sizeof(int) * size.col);
+	play_game(size, tab, current_pos, HUMAN);
 	return (0);
 }
 

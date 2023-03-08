@@ -8,7 +8,11 @@ static int    get_col(t_size size, enum e_player tab[size.row][size.col])
 	while (1)
 	{
 		ft_putstr(1, "select >");
-		read(STDIN_FILENO, str, 200);
+		if (read(STDIN_FILENO, str, 200) <= 1)
+		{
+			ft_putstr(1, "Not a valid column\n");
+			continue;
+		}
 		column = ft_atoi(str);
 		if (column >= 0 && column < size.col)
 		{
@@ -22,18 +26,12 @@ static int    get_col(t_size size, enum e_player tab[size.row][size.col])
 	}
 }
 
-
-
-t_pos play_human(t_size size, enum e_player tab[size.row][size.col])
+t_pos play_human(t_size size, enum e_player tab[size.row][size.col], int current_pos[size.col])
 {
 	t_pos	pos;
 
 	pos.x = get_col(size, tab);
-	pos.y = size.row - 1;
-	do
-	{
-		pos.y--;
-	} while (pos.y > 0 && tab[pos.y][pos.x] == NONE);
-
+	pos.y = current_pos[pos.x];
+	current_pos[pos.x]++;
 	return (pos);
 }
