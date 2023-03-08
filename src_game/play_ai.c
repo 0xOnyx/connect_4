@@ -1,13 +1,15 @@
 #include "includes.h"
 
-#define DEPTH 6
+#define DEPTH 10
 
 t_pos play_ai(t_size size, enum e_player tab[size.row][size.col], int current_pos[size.col])
 {
 	int 	col_max;
 	int 	value_max;
 	t_pos	pos;
+	unsigned long int nbr;
 
+	nbr = 0;
 	pos.x = 0;
 	value_max = INT_MIN;
 	col_max = pos.x;
@@ -21,7 +23,7 @@ t_pos play_ai(t_size size, enum e_player tab[size.row][size.col], int current_po
 		}
 		current_pos[pos.x]++;
 		tab[pos.y][pos.x] = AI;
-		if ((tmp_value = max(value_max, minmax(size, tab, DEPTH, current_pos, MINIMIZER))) != value_max)
+		if ((tmp_value = max(value_max, minmax(size, tab, DEPTH, current_pos, MINIMIZER, INT_MIN, INT_MAX, &nbr))) != value_max)
 		{
 			value_max = tmp_value;
 			col_max = pos.x;
@@ -31,6 +33,7 @@ t_pos play_ai(t_size size, enum e_player tab[size.row][size.col], int current_po
 		current_pos[pos.x]--;
 		pos.x++;
 	}
+	printf("number iterationr => %lu\n", nbr);
 	pos.x = col_max;
 	pos.y = current_pos[col_max];
 	current_pos[col_max]++;

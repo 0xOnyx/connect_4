@@ -5,11 +5,12 @@ int minmax(t_size size,
 		enum e_player tab[size.row][size.col],
 		int depth,
 		int current_pos[size.col],
-		enum e_minmax current_minmax)
+		enum e_minmax current_minmax, int alpha, int beta, unsigned long int *nbr)
 {
 	t_pos	pos;
 	int 	current_value;
 
+	(*nbr)++;
 	if (depth == 0)
 		return (calc_board_value(size, tab));
 	current_value = 0;
@@ -32,7 +33,14 @@ int minmax(t_size size,
 				current_pos[pos.x]--;
 				return (100 + depth);
 			}
-			current_value = max(current_value, minmax(size, tab, depth - 1, current_pos, MINIMIZER));
+			current_value = max(current_value, minmax(size, tab, depth - 1, current_pos, MINIMIZER, alpha, beta, nbr));
+			if (current_value > beta)
+			{
+				tab[pos.y][pos.x] = NONE;
+				current_pos[pos.x]--;
+				break ;
+			}
+			alpha = max(alpha, current_value);
 			tab[pos.y][pos.x] = NONE;
 			current_pos[pos.x]--;
 			pos.x++;
@@ -56,7 +64,14 @@ int minmax(t_size size,
 				current_pos[pos.x]--;
 				return (-100 - depth);
 			}
-			current_value = min(current_value, minmax(size, tab, depth - 1, current_pos, MAXIMIZER));
+			current_value = min(current_value, minmax(size, tab, depth - 1, current_pos, MAXIMIZER, alpha, beta, nbr));
+			if (current_value < alpha)
+			{
+				tab[pos.y][pos.x] = NONE;
+				current_pos[pos.x]--;
+				break ;
+			}
+			beta = min(beta, current_value);
 			tab[pos.y][pos.x] = NONE;
 			current_pos[pos.x]--;
 			pos.x++;
