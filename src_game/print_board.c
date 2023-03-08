@@ -13,7 +13,7 @@ void	print_board(t_size size, enum e_player tab[size.row][size.col])
 	else
 		ft_putstr(1, "  ");
 	y = 0;
-	while (y <= size.row)
+	while (y < size.col)
 	{
 		tmp = ft_itoa(y);
 		ft_putstr(1, tmp);
@@ -54,7 +54,7 @@ void	print_board(t_size size, enum e_player tab[size.row][size.col])
 	else
 		ft_putstr(1, "  ");
 	y = 0;
-	while (y <= size.row)
+	while (y < size.col)
 	{
 		tmp = ft_itoa(y);
 		ft_putstr(1, tmp);
