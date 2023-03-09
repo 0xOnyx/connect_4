@@ -1,5 +1,8 @@
 #include "includes.h"
 
+extern WINDOW  *column_selector;
+extern bool gui;
+
 int	play_game(t_size size, enum e_player tab[size.row][size.col], int current_pos[size.col], enum e_player first_player)
 {
 	enum e_player 	winner;
@@ -22,13 +25,35 @@ int	play_game(t_size size, enum e_player tab[size.row][size.col], int current_po
 		number_of_plays++;
 	}while ( !(winner = has_won(size, tab, pos)) && number_of_plays < (unsigned int)(size.row * size.col));
 	print_board(size, tab);
-	if (winner)
+	if (!gui)
 	{
-		ft_putstr(1, "[WINNER]\t");
-		winner == HUMAN ? ft_putstr(1, "HUMAN") : ft_putstr(1, "AI");
-		ft_putchar_fd('\n', 1);
+		if (winner)
+		{
+			ft_putstr(1, "[WINNER]\t");
+			winner == HUMAN ? ft_putstr(1, "HUMAN") : ft_putstr(1, "AI");
+			ft_putchar_fd('\n', 1);
+		}
+		else
+			ft_putstr(1, "[DRAW]\n");
 	}
 	else
-		ft_putstr(1, "[DRAW]\n");
+	{
+		wclear(column_selector);
+		wrefresh(column_selector);
+		if (winner)
+		{
+			mvwprintw(column_selector, 0, 0, "[WINNER]\t%s", winner == HUMAN ? "HUMAN" : "AI");
+		}
+		else
+			mvwprintw(column_selector, 0, 0, "[DRAW]\t");
+		wrefresh(column_selector);
+		refresh();
+		while (1)
+		{
+			if ( getch() == 'q')
+				break;
+		}
+	}
+
 	return (0);
 }
