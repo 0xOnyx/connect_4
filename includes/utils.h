@@ -30,6 +30,7 @@ typedef struct s_pos
 
 void	ft_putchar_fd(char c, int fd);
 int		ft_putstr(int fd, char *str);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_atoi(const char *str);
 char	*ft_itoa(int n);
 void	*ft_memset(void *str, int c, size_t n);

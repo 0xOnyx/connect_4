@@ -6,6 +6,8 @@
 #include <time.h>
 #include <unistd.h>
 #include <limits.h>
+#include <locale.h>
+#include <ncurses.h>
 #include "utils.h"
 #include "game.h"
 #include "minmax.h"

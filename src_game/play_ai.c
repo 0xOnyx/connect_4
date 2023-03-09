@@ -2,6 +2,9 @@
 
 #define DEPTH 10
 
+extern bool		gui;
+extern WINDOW	*progress_bar;
+
 t_pos play_ai(t_size size, enum e_player tab[size.row][size.col], int current_pos[size.col])
 {
 	int 	col_max;
@@ -13,6 +16,13 @@ t_pos play_ai(t_size size, enum e_player tab[size.row][size.col], int current_po
 	pos.x = 0;
 	value_max = INT_MIN;
 	col_max = pos.x;
+	if (gui)
+	{
+		wclear(progress_bar);
+		wrefresh(progress_bar);
+		mvwprintw(progress_bar, 0, 0, "[");
+		move(0, 0);
+	}
 	while (pos.x < size.col)
 	{
 		int tmp_value;
@@ -28,12 +38,28 @@ t_pos play_ai(t_size size, enum e_player tab[size.row][size.col], int current_po
 			value_max = tmp_value;
 			col_max = pos.x;
 		}
-		printf(" pos => %d minmax => %d\n", pos.x, tmp_value);
+		if (!gui)
+			printf(" pos => %d minmax => %d\n", pos.x, tmp_value);
+		else
+		{
+			mvwprintw(progress_bar, 0, pos.x * 4, "====>");
+			move(0, (pos.x * 4) - 1);
+			wrefresh(progress_bar);
+		}
 		tab[pos.y][pos.x] = NONE;
 		current_pos[pos.x]--;
 		pos.x++;
 	}
-	printf("number iterationr => %lu\n", nbr);
+	if (!gui)
+		printf("number iterationr => %lu\n", nbr);
+	else
+	{
+		wclear(progress_bar);
+		setlocale(LC_NUMERIC, "");
+		mvwprintw(progress_bar, 0, 0, "nbr iteration => %'lu", nbr);
+		wrefresh(progress_bar);
+		move(0, 0);
+	}
 	pos.x = col_max;
 	pos.y = current_pos[col_max];
 	current_pos[col_max]++;

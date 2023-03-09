@@ -11,6 +11,7 @@ int	play_game(t_size size, enum e_player tab[size.row][size.col], int current_po
 	number_of_plays = 0;
 	do
 	{
+		update_score_board(current_player);
 		print_board(size, tab);
 		if (current_player == HUMAN)
 			pos = play_human(size, tab, current_pos);

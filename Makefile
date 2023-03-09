@@ -20,7 +20,7 @@ PATH_UTIL			= src_util/
 PATH_OBJ			= objs/
 
 HEADER				= 	includes.h game.h utils.h minmax.h
-SRC_GAME			= 	main.c play_game.c has_won.c play_human.c print_board.c play_ai.c
+SRC_GAME			= 	main.c play_game.c has_won.c play_human.c print_board.c play_ai.c update_score_board.c
 SRC_MINMAX			= 	minmax.c calc_board_value.c
 SRC_UTIL			= 	string.c util.c
 
@@ -43,7 +43,7 @@ CFLAGS				= -Wall -Wextra -Werror
 
 
 OPTIONS				= -I$(PATH_HEADER)
-LIBS				=
+LIBS				= -lncurses
 CC					= gcc
 RM					= rm -rf
 
